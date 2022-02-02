@@ -1,0 +1,53 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> <!--타임리프를 사용하겠다는말-->
+
+        <th:block th:fragment="header">
+            <header>
+                <div class="collapse bg-dark" id="navbar_header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8 col-md-7 py-4">
+                                <h4 class="text-white">Board</h4>
+                                <p class="text-muted">Spring Boot Board</p>
+                            </div>
+                            <div class="col-sm-4 offset-md-1 py-4">
+                                <h4 class="text-white">Menus</h4>
+                                <ul class="list-unstyled">
+                                    <span th:if="${session.loginUser == null}"> <!--무조건 session적어줘야됨 타임리프에선-->
+                                        <li><a th:href="@{/user/login}" class="text-white">Login</a></li>
+                                        <li><a th:href="@{/user/join}" class="text-white">Join</a></li>
+                                    </span>
+                                    <span th:if="${session.loginUser != null}">
+                                        <li><a th:href="@{/user/logout}" class="text-white">Logout</a></li>
+                                    </span>
+                                    <li th:each="item : ${@menus}">
+                                        <a th:href="@{/board/list(icategory=${item.icategory})}" class="text-white" th:text="${item.nm}"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar navbar-dark bg-dark shadow-sm">
+                    <div class="container">
+                        <a href="/" class="navbar-brand d-flex align-items-center">
+                            <strong>Board</strong>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_header"
+                                aria-controls="navbar_header" aria-expanded="false" aria-label="Toggle Menu">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+        </th:block>
+
+        <th:block th:fragment="footer">
+            <footer class="text-muted bg-dark py-1">
+                <div class="container">
+                    <p class="mb-1">Spring Boot Board &copy; with Bootstrap!</p>
+                </div>
+            </footer>
+        </th:block>
+</html>
